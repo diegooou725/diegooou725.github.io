@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesa de Regalos - Boda de Juan & María</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --fondo-pagina: #F8F8F8;
+            --fondo-tarjeta: #FFFFFF;
+            --primario: #003366;
+            --acento-dorado: #B99962;
+            --texto: #333333;
+            --texto-secundario: #555555;
+            --gris-claro: #aaa;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--fondo-pagina);
+            color: var(--texto-secundario);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .tarjeta-regalos {
+            background-color: var(--fondo-tarjeta);
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 40px 30px 50px 30px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--acento-dorado);
+            position: relative;
+        }
+        
+        .link-volver {
+            display: inline-block;
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            font-size: 0.9rem;
+            color: var(--primario);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .link-volver:hover { color: var(--acento-dorado); }
+        .link-volver::before {
+            content: '← ';
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .link-volver:hover::before { transform: translateX(-3px); }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--primario);
+            margin: 30px 0 15px 0;
+        }
+
+        .introduccion {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 550px;
+            margin: 0 auto 40px auto;
+        }
+        
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primario);
+            text-align: left;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* --- Estilos para la Lista de Actividades --- */
+        
+        .lista-actividades {
+            text-align: left;
+        }
+        
+        .actividad-item {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .actividad-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .actividad-titulo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1; 
+            min-width: 0;
+        }
+
+        .actividad-flecha {
+            width: 10px;
+            height: 10px;
+            fill: var(--primario);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .actividad-titulo {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--texto);
+            margin: 0;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+            word-break: break-word;
+        }
+        
+        .boton-regalar {
+            background-color: var(--primario);
+            color: var(--fondo-tarjeta);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .boton-regalar:hover {
+            background-color: #002244;
+            transform: scale(1.05);
+        }
+
+        .actividad-descripcion {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding-left: 22px;
+            padding-right: 10px;
+        }
+        
+        .actividad-descripcion p {
+             transition: color 0.3s ease;
+        }
+
+        /* --- ESTADO ACTIVO (Al hacer clic) --- */
+        
+        .actividad-item.active .actividad-descripcion {
+            max-height: 200px;
+            padding-bottom: 20px;
+        }
+        
+        .actividad-item.active .actividad-flecha {
+            transform: rotate(90deg);
+        }
+        
+        
+        /* --- ESTADO COMPRADO --- */
+        
+        .actividad-item.comprado {
+            opacity: 0.7;
+            background-color: #fdfdfd;
+        }
+        
+        .actividad-item.comprado .actividad-titulo {
+            text-decoration: line-through;
+            color: var(--gris-claro);
+        }
+        
+        .actividad-item.comprado .actividad-flecha {
+            fill: var(--gris-claro);
+        }
+        
+        .actividad-item.comprado .boton-regalar {
+            background-color: var(--gris-claro);
+            color: #fff;
+            transform: none;
+            cursor: not-allowed;
+        }
+        
+        /* --- FIN ESTADO COMPRADO --- */
+        
+
+        @media (max-width: 500px) {
+            .actividad-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .boton-regalar {
+                margin-left: 22px;
+            }
+            .link-volver {
+                position: static;
+                margin-bottom: 20px;
+            }
+            h1 { margin-top: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="tarjeta-regalos">
+        
+        <a href="index.html" class="link-volver">Volver a la Invitación</a>
+
+        <h1>Mesa de Regalos</h1>
+        <p class="introduccion">
+            Nuestra luna de miel será en Brasil. Si deseas, puedes contribuir 
+            regalándonos una de estas increíbles experiencias.
+        </p>
+
+        <svg style="display: none;">
+            <symbol id="icono-flecha" viewBox="0 0 10 10">
+                <path d="M2.5 0 L10 5 L2.5 10 L0 8 L5 5 L0 2 Z" />
+            </symbol>
+        </svg>
+
+        <h2>Río de Janeiro</h2>
+        <div class="lista-actividades">
+
+            <div class="actividad-item">
+                <div class="actividad-header">
+                    <div class="actividad-titulo-wrap">
+                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
+                        <h3 class="actividad-titulo">Visita al Cristo Redentor</h3>
+                    </div>
+                    <button class="boton-regalar">Quiero regalar esto</button>
+                </div>
+                <div class="actividad-descripcion">
+                    <p>Entradas para subir en el tren de Corcovado y visitar el icónico Cristo Redentor al amanecer, disfrutando de las mejores vistas de la ciudad.</p>
+                </div>
+            </div>
+
+            <div class="actividad-item comprado">
+                <div class="actividad-header">
+                    <div class="actividad-titulo-wrap">
+                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
+                        <h3 class="actividad-titulo">Clase de Samba en Lapa</h3>
+                    </div>
+                    <button class="boton-regalar" disabled>¡Regalado!</button>
+                </div>
+                <div class="actividad-descripcion">
+                    <p>Una clase privada de 2 horas para aprender los movimientos básicos de la samba y disfrutarlos en el corazón de la vida nocturna de Río.</p>
+                </div>
+            </div>
+            
+            <div class="actividad-item">
+                <div class="actividad-header">
+                    <div class="actividad-titulo-wrap">
+                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
+                        <h3 class="actividad-titulo">Tour en Bote (Pan de Azúcar)</h3>
+                    </div>
+                    <button class="boton-regalar">Quiero regalar esto</button>
+                </div>
+                <div class="actividad-descripcion">
+                    <p>Un paseo en velero por la bahía de Guanabara para ver el atardecer con vistas espectaculares del Pan de Azúcar.</p>
+
+                </div>
+            </div>
+
+            <div class="actividad-item">
+                <div class="actividad-header">
+                    <div class="actividad-titulo-wrap">
+                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
+                        <h3 class="actividad-titulo">Tour Escalera de Selarón y Santa Teresa</h3>
+                    </div>
+                    <button class="boton-regalar">Quiero regalar esto</button>
+                </div>
+                <div class="actividad-descripcion">
+                    <p>Un recorrido a pie por el bohemio barrio de Santa Teresa y sus famosas escaleras de colores creadas por el artista Jorge Selarón.</p>
+                </div>
+            </div>
+
+        </div>
+        
+        <h2>São Paulo</h2>
+        <div class="lista-actividades">
+            
+            <div class="actividad-item">
+                <div class="actividad-header">
+                    <div class="actividad-titulo-wrap">
+                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
+                        <h3 class="actividad-titulo">Tour Gastronómico (Mercado Municipal)</h3>
+                    </div>
+                    <button class="boton-regalar">Quiero regalar esto</button>
+                </div>
+                <div class="actividad-descripcion">
+                    <p>Un recorrido guiado para probar las famosas frutas exóticas, el sándwich de mortadela y el pastel de bacalhau en el histórico Mercado Municipal.</p>
+                </div>
+            </div>
+            
+            <div class="actividad-item comprado">
+                <div class="actividad-header">
+                    <div class="actividad-titulo-wrap">
+                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
+                        <h3 class="actividad-titulo">Noche de Jazz en "Beco das Garrafas"</h3>
+                    </div>
+                    <button class="boton-regalar" disabled>¡Regalado!</button>
+                </div>
+                <div class="actividad-descripcion">
+                    <p>Entradas para una noche de Bossa Nova y Jazz en vivo en uno de los clubes más legendarios de la ciudad, cuna de este género musical.</p>
+                </div>
+            </div>
+
+            <div class="actividad-item">
+                <div class="actividad-header">
+                    <div class="actividad-titulo-wrap">
+                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
+                        <h3 class="actividad-titulo">Visita al Museo de Arte (MASP)</h3>
+                    </div>
+                    <button class="boton-regalar">Quiero regalar esto</button>
+                </div>
+                <div class="actividad-descripcion">
+                    <p>Entradas al Museo de Arte de São Paulo, famoso por su arquitectura y su increíble colección de arte europeo y brasileño.</p>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script>
+        const headers = document.querySelectorAll('.actividad-header');
+        const botones = document.querySelectorAll('.boton-regalar');
+
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.closest('.actividad-item');
+                item.classList.toggle('active');
+                // La línea errónea ha sido eliminada.
+            });
+        });
+        
+        botones.forEach(boton => {
+            boton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                
+                if (boton.disabled) {
+                    return;
+                }
+                
+                alert('¡Gracias por este increíble regalo! Por favor, avísale a Juan o María para que lo marquen como comprado.');
+            });
+        });
+        
+    </script>
+
+</body>
+</html>

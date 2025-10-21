@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda de Juan Pérez & María Alvarado</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Versión Elegante/Formal --- */
+
+        :root {
+            --fondo-pagina: #F8F8F8;
+            --fondo-tarjeta: #FFFFFF;
+            --primario: #003366; /* Azul Medianoche */
+            --acento-dorado: #B99962; /* Dorado/Champán */
+            --texto: #333333;
+            --texto-secundario: #555555;
+        }
+
+        /* Estilos generales */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--fondo-pagina);
+            color: var(--texto-secundario);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Contenedor principal (Tarjeta) */
+        .invitacion {
+            background-color: var(--fondo-tarjeta);
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 40px 30px 50px 30px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--acento-dorado);
+        }
+
+        /* Adorno SVG sobre el título */
+        .adorno-titulo {
+            fill: var(--acento-dorado);
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        /* Títulos */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--primario);
+            margin: 10px 0 10px 0;
+            word-wrap: break-word;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--texto);
+            margin: 0 0 15px 0;
+        }
+
+        /* Fecha y hora */
+        .fecha {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--primario);
+            margin-bottom: 30px;
+        }
+
+        /* Texto "Faltan:" */
+        .texto-faltan {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- CUENTA REGRESIVA --- */
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .tiempo-caja {
+            background-color: var(--primario);
+            color: var(--fondo-tarjeta);
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 90px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .tiempo-caja span:first-child {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .tiempo-caja span:last-child {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        /* Contenedor de sección */
+        .seccion {
+            margin-top: 25px;
+            padding-top: 25px;
+        }
+
+        /* Separador de secciones elegante */
+        .separador-elegante {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 450px;
+        }
+        .separador-elegante::before,
+        .separador-elegante::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--acento-dorado);
+            opacity: 0.5;
+        }
+        .separador-diamante {
+            fill: var(--acento-dorado);
+            flex-shrink: 0;
+            margin: 0 15px;
+            width: 12px;
+            height: 12px;
+        }
+
+        /* Títulos de sección (H3) */
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primario);
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Párrafos de las secciones */
+        .seccion p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        /* Mapas */
+        .mapa-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 15px auto 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .mapa-container iframe {
+            width: 100%;
+            height: 350px;
+            border: 0;
+        }
+
+        /* Estilo de Itinerario (Línea de Tiempo) */
+        .itinerario-timeline {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+            max-width: 400px;
+            margin: 30px auto 0 auto;
+        }
+        .itinerario-timeline::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 20px;
+            width: 2px;
+            background: var(--acento-dorado);
+            opacity: 0.3;
+        }
+        .itinerario-timeline li {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 25px;
+            text-align: left;
+            min-height: 30px;
+        }
+        .itinerario-timeline li::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            background: var(--primario);
+            border-radius: 50%;
+            border: 2px solid var(--fondo-tarjeta);
+            box-shadow: 0 0 0 2px var(--primario);
+            z-index: 1;
+        }
+        .itinerario-timeline li strong {
+            color: var(--primario);
+            font-size: 1.15rem;
+            display: block;
+        }
+
+        /* Botón de Regalos */
+        .boton-regalos {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--primario);
+            border: 2px solid var(--primario);
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        .boton-regalos:hover {
+            background-color: var(--primario);
+            color: var(--fondo-tarjeta);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 51, 102, 0.2);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="invitacion">
+        
+        <svg class="adorno-titulo" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 10 Q 40 0, 10 5 Q 0 7, 10 15 Q 40 20, 50 10 M50 10 Q 60 0, 90 5 Q 100 7, 90 15 Q 60 20, 50 10 Z" stroke="none" />
+        </svg>
+        
+        <h1>Juan Pérez & María Alvarado</h1>
+        <h2>¡Nos Casamos!</h2>
+        <p class="fecha">31 de Diciembre | 12:00 PM</p>
+        
+        <p class="texto-faltan">Faltan:</p>
+        <div id="countdown">
+            <div class="tiempo-caja"><span id="dias">00</span><span>Días</span></div>
+            <div class="tiempo-caja"><span id="horas">00</span><span>Horas</span></div>
+            <div class="tiempo-caja"><span id="minutos">00</span><span>Minutos</span></div>
+            <div class="tiempo-caja"><span id="segundos">00</span><span>Segundos</span></div>
+        </div>
+
+        <div class="separador-elegante">
+            <svg class="separador-diamante" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                <path d="M6 0 L12 6 L6 12 L0 6 Z" />
+            </svg>
+        </div>
+
+        <div class="seccion">
+            <h3>Ceremonia Religiosa</h3>
+            <p>12:00 PM</p>
+            <p>Parroquia de San Judas Tadeo y de la Santa Cruz</p>
+            
+            <div class="mapa-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3731.8370525652053!2d-100.44842878955255!3d20.716840480775723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d3576492103775%3A0xd4481220e3442c3c!2sParroquia%20de%20San%20Judas%20Tadeo%20y%20de%20la%20Santa%20Cruz!5e0!3m2!1ses-419!2smx!4v1761087657829!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <div class="separador-elegante">
+            <svg class="separador-diamante" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                <path d="M6 0 L12 6 L6 12 L0 6 Z" />
+            </svg>
+        </div>
+
+        <div class="seccion">
+            <h3>Recepción</h3>
+            <p>A partir de las 2:00 PM</p>
+            <p>Salón de Eventos La Ermita</p>
+
+            <div class="mapa-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.7220851632446!2d-100.45785508955358!3d20.680882680803123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d3574c9286d423%3A0xcae0a6eefe13daa7!2sSalon%20de%20Eventos%20La%20Ermita!5e0!3m2!1ses-419!2smx!4v1761087703749!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <div class="separador-elegante">
+            <svg class="separador-diamante" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                <path d="M6 0 L12 6 L6 12 L0 6 Z" />
+            </svg>
+        </div>
+
+        <div class="seccion">
+            <h3>Itinerario</h3>
+            <ul class="itinerario-timeline">
+                <li><strong>12:00 PM</strong>Ceremonia en la Iglesia</li>
+                <li><strong>02:00 PM</strong>Recepción y Fiesta en el Salón</li>
+            </ul>
+        </div>
+        
+        <div class="seccion">
+            <h3>Código de Vestimenta</h3>
+            <p><strong>Formal</strong></p>
+            <p style="line-height: 1.7;">
+                Nos encantaría que nos acompañes luciendo tu mejor atuendo.
+                <br><br>
+                <strong>Mujeres:</strong> Vestido largo o de cóctel.<br>
+                <strong>Hombres:</strong> Traje formal.
+            </p>
+        </div>
+
+        <div class="separador-elegante">
+            <svg class="separador-diamante" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                <path d="M6 0 L12 6 L6 12 L0 6 Z" />
+            </svg>
+        </div>
+
+        <div class="seccion">
+            <h3>Mesa de Regalos</h3>
+            <p>Tu presencia es nuestro mejor regalo, pero si deseas obsequiarnos algo, puedes hacerlo aquí:</p>
+            
+            <a href="mesa-de-regalos.html" class="boton-regalos">Ver Opciones de Regalos</a>
+        </div>
+
+    </div>
+
+    <script>
+        // Fecha de la boda: 31 de Diciembre (mes 11) de 2025, 12:00 PM
+        // (La fecha 2025 es un ejemplo, ajústala al año correcto si es necesario)
+        const fechaBoda = new Date("December 31, 2025 12:00:00").getTime();
+
+        const intervalo = setInterval(function() {
+            const ahora = new Date().getTime();
+            const diferencia = fechaBoda - ahora;
+
+            // Si el tiempo ya pasó
+            if (diferencia < 0) {
+                clearInterval(intervalo);
+                const countdownDiv = document.getElementById("countdown");
+                const textoFaltanP = document.querySelector('.texto-faltan');
+                if (countdownDiv) countdownDiv.style.display = 'none';
+                if (textoFaltanP) textoFaltanP.style.display = 'none';
+                
+                if (!document.getElementById("mensaje-final-boda")) {
+                    const mensajeFinal = document.createElement('h2');
+                    mensajeFinal.id = "mensaje-final-boda";
+                    mensajeFinal.innerText = "¡Llegó el gran día!";
+                    mensajeFinal.style.color = 'var(--primario)';
+                    const fechaP = document.querySelector('.fecha');
+                    if (fechaP) fechaP.insertAdjacentElement('afterend', mensajeFinal);
+                }
+                return;
+            }
+
+            // Calculamos el tiempo restante
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            
+            /* --- CÓDIGO CORREGIDO (YA ESTABA BIEN) --- */
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            // Actualizamos el HTML
+            document.getElementById("dias").innerText = dias.toString().padStart(2, '0');
+            document.getElementById("horas").innerText = horas.toString().padStart(2, '0');
+            document.getElementById("minutos").innerText = minutos.toString().padStart(2, '0');
+            document.getElementById("segundos").innerText = segundos.toString().padStart(2, '0');
+
+        }, 1000);
+    </script>
+
+</body>
+</html>
