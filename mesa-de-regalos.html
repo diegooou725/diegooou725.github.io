@@ -7,366 +7,477 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- Estilos Generales (Consistentes con index.html) --- */
         :root {
-            --fondo-pagina: #F8F8F8;
-            --fondo-tarjeta: #FFFFFF;
-            --primario: #003366;
-            --acento-dorado: #B99962;
-            --texto: #333333;
-            --texto-secundario: #555555;
-            --gris-claro: #aaa;
+            --blanco: #FFFFFF;
+            --dorado: #B99962; 
+            --negro-suave: #333333; 
+            --gris-medio: #555555; 
+            --fondo-seccion: #F8F8F8; 
+            --gris-borde: #eee; 
+            --gris-claro-comprado: #aaa; 
+            --dorado-velo: rgba(185, 153, 98, 0.4); 
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--fondo-pagina);
-            color: var(--texto-secundario);
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 300; 
+            background-color: var(--fondo-seccion); 
+            color: var(--negro-suave); 
+            line-height: 1.7; 
+            text-align: center; 
+            padding: 20px; 
+            padding-bottom: 90px; 
         }
 
-        .tarjeta-regalos {
-            background-color: var(--fondo-tarjeta);
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 40px 30px 50px 30px;
-            box-sizing: border-box;
-            border-radius: 12px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
-            border: 1px solid var(--acento-dorado);
-            position: relative;
+        h1, h2, h3 { 
+            font-family: 'Raleway', sans-serif;
+            font-weight: 300; 
+            color: var(--negro-suave); 
+            text-align: center; 
+            letter-spacing: 1px; 
+            margin-bottom: 25px; 
         }
         
+        /* Ajuste de tamaño */
+        h1 { font-size: 2.8rem; margin-top: 40px; } 
+        h2 { font-size: 2rem; text-align: left; border-bottom: 1px solid var(--gris-borde); padding-bottom: 10px; margin-top: 40px;} 
+        h3 { font-size: 1.3rem; font-weight: 400; color: var(--negro-suave); margin: 10px 0;} 
+
+        /* Contenedor principal (Tarjeta) */
+        .container {
+            max-width: 900px; 
+            margin: 40px auto;
+            padding: 40px 30px 50px 30px;
+            background-color: var(--blanco); 
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+            position: relative; 
+            text-align: center; 
+        }
+        
+        /* Párrafos */
+        p {
+            color: var(--gris-medio); 
+            font-weight: 300; 
+            margin-bottom: 20px;
+        }
+        .introduccion {
+            font-size: 1.1rem; 
+            max-width: 550px;
+            margin: 0 auto 40px auto;
+            text-align: center; 
+        }
+        
+        /* Link Volver */
         .link-volver {
             display: inline-block;
             position: absolute;
             top: 25px;
             left: 30px;
-            font-size: 0.9rem;
-            color: var(--primario);
+            font-size: 1rem;
+            color: var(--dorado); 
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 400; 
             transition: color 0.3s ease;
         }
-        .link-volver:hover { color: var(--acento-dorado); }
-        .link-volver::before {
-            content: '← ';
+        .link-volver:hover { color: var(--negro-suave); }
+        .link-volver::before { 
+            content: '← '; 
             transition: transform 0.3s ease;
             display: inline-block;
         }
         .link-volver:hover::before { transform: translateX(-3px); }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            color: var(--primario);
-            margin: 30px 0 15px 0;
+
+        /* --- ESTILOS TARJETAS DE REGALO --- */
+        .regalos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 30px; 
+            margin-top: 30px;
         }
 
-        .introduccion {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            max-width: 550px;
-            margin: 0 auto 40px auto;
+        .regalo-card {
+            background-color: var(--blanco);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+            overflow: hidden; 
+            text-align: left; 
+            cursor: pointer; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; 
         }
-        
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--primario);
-            text-align: left;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+        .regalo-card:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 12px 20px rgba(0,0,0,0.1);
         }
 
-        /* --- Estilos para la Lista de Actividades --- */
-        
-        .lista-actividades {
-            text-align: left;
-        }
-        
-        .actividad-item {
-            border-bottom: 1px solid #eee;
-        }
-        
-        .actividad-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            cursor: pointer;
+        .regalo-imagen {
             width: 100%;
+            height: 180px; 
+            background-color: var(--gris-borde); 
+            background-size: cover;
+            background-position: center;
+            position: relative; 
+        }
+        
+        /* Velo dorado para regalos comprados */
+        .regalo-card.comprado .regalo-imagen::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--dorado-velo); 
+            z-index: 1; 
         }
 
-        .actividad-titulo-wrap {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1; 
-            min-width: 0;
+        .regalo-contenido {
+            padding: 15px 20px 20px 20px;
+        }
+        
+        /* Contenedor para título y flecha */
+        .regalo-titulo-wrap {
+             display: flex;
+             align-items: center;
+             gap: 8px; 
+             margin-bottom: 8px;
+        }
+        
+        .regalo-contenido h3 {
+             text-align: left; 
+             margin-bottom: 0; 
+             font-size: 1.2rem;
+             flex-grow: 1; 
         }
 
-        .actividad-flecha {
-            width: 10px;
-            height: 10px;
-            fill: var(--primario);
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
+        /* Estilo para la flecha de detalles */
+        .detalle-flecha {
+             width: 10px;
+             height: 10px;
+             fill: var(--dorado);
+             transition: transform 0.3s ease;
+             flex-shrink: 0; 
         }
-
-        .actividad-titulo {
-            font-size: 1.15rem;
-            font-weight: bold;
-            color: var(--texto);
-            margin: 0;
-            transition: color 0.3s ease, text-decoration 0.3s ease;
-            word-break: break-word;
+        
+        .regalo-contenido p { 
+             font-size: 0.9rem;
+             margin-bottom: 15px;
+             color: var(--gris-medio);
         }
         
         .boton-regalar {
-            background-color: var(--primario);
-            color: var(--fondo-tarjeta);
+            background-color: var(--dorado); 
+            color: var(--blanco);
             border: none;
             border-radius: 6px;
             padding: 8px 12px;
             font-size: 0.9rem;
-            font-weight: bold;
-            font-family: 'Montserrat', sans-serif;
+            font-weight: 400; 
+            font-family: 'Raleway', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-left: 15px;
-            white-space: nowrap;
-            flex-shrink: 0;
+            text-align: center;
         }
         .boton-regalar:hover {
-            background-color: #002244;
+            opacity: 0.8;
             transform: scale(1.05);
         }
-
-        .actividad-descripcion {
+        
+        /* Descripción completa (oculta) */
+        .regalo-descripcion-full {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            padding-left: 22px;
-            padding-right: 10px;
+            padding: 0 20px; 
+            font-size: 0.9rem;
+            color: var(--gris-medio);
+            text-align: left;
+        }
+        .regalo-descripcion-full p {
+             margin-bottom: 0;
+             padding-bottom: 20px; 
         }
         
-        .actividad-descripcion p {
-             transition: color 0.3s ease;
+        /* Estado activo */
+        .regalo-card.active .regalo-descripcion-full {
+            max-height: 200px; 
+        }
+        .regalo-card.active .detalle-flecha {
+             transform: rotate(90deg);
+        }
+        
+        /* Estado comprado */
+        .regalo-card.comprado {
+            opacity: 0.8; 
+            cursor: default;
+        }
+        .regalo-card.comprado:hover {
+             transform: none;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        }
+         .regalo-card.comprado .regalo-contenido h3 { 
+             text-decoration: line-through;
+             color: var(--gris-medio);
+         }
+         .regalo-card.comprado .boton-regalar {
+             background-color: var(--gris-medio);
+             cursor: not-allowed;
+             pointer-events: none; 
+         }
+
+
+        /* --- FOOTER FIJO VISIBLE --- */
+        #sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0; 
+            width: 100%; 
+            background-color: rgba(255, 255, 255, 0.95); 
+            padding: 10px 30px; 
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08); 
+            z-index: 999; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            flex-wrap: wrap; 
+            gap: 10px; 
+            opacity: 1; 
+            transform: translateY(0); 
+            pointer-events: auto;
+        }
+        .footer-text {
+            font-size: 0.8rem; 
+            color: var(--gris-medio);
+            text-align: left; 
+            flex-grow: 1; 
+        }
+        .whatsapp-button {
+            display: inline-flex; 
+            align-items: center;
+            background-color: var(--dorado);
+            color: var(--blanco);
+            padding: 6px 12px; 
+            border-radius: 5px;
+            font-size: 0.8rem; 
+            font-weight: 400; 
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; 
+        }
+        .whatsapp-button svg { 
+             width: 14px;
+             height: 14px;
+             fill: var(--blanco);
+             margin-right: 6px;
+        }
+        .whatsapp-button:hover {
+             background-color: #a88a53; 
         }
 
-        /* --- ESTADO ACTIVO (Al hacer clic) --- */
-        
-        .actividad-item.active .actividad-descripcion {
-            max-height: 200px;
-            padding-bottom: 20px;
-        }
-        
-        .actividad-item.active .actividad-flecha {
-            transform: rotate(90deg);
-        }
-        
-        
-        /* --- ESTADO COMPRADO --- */
-        
-        .actividad-item.comprado {
-            opacity: 0.7;
-            background-color: #fdfdfd;
-        }
-        
-        .actividad-item.comprado .actividad-titulo {
-            text-decoration: line-through;
-            color: var(--gris-claro);
-        }
-        
-        .actividad-item.comprado .actividad-flecha {
-            fill: var(--gris-claro);
-        }
-        
-        .actividad-item.comprado .boton-regalar {
-            background-color: var(--gris-claro);
-            color: #fff;
-            transform: none;
-            cursor: not-allowed;
-        }
-        
-        /* --- FIN ESTADO COMPRADO --- */
-        
-
-        @media (max-width: 500px) {
-            .actividad-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+        /* --- AJUSTES PARA MÓVILES --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .link-volver { position: static; margin-bottom: 20px; display: block;}
+            .container { padding: 20px 15px 30px 15px; margin: 20px auto;}
+            
+            /* Ajustes Footer Móvil */
+            #sticky-footer {
+                 justify-content: center; 
+                 padding: 8px 15px; 
+                 text-align: center; 
             }
-            .boton-regalar {
-                margin-left: 22px;
+            .footer-text {
+                 width: 100%; 
+                 margin-bottom: 5px;
+                 text-align: center; 
             }
-            .link-volver {
-                position: static;
-                margin-bottom: 20px;
-            }
-            h1 { margin-top: 0; }
         }
 
     </style>
 </head>
 <body>
 
-    <div class="tarjeta-regalos">
+    <svg style="display: none;">
+        <symbol id="icono-flecha-abajo" viewBox="0 0 10 10">
+            <path d="M0 2.5 L5 7.5 L10 2.5 L8 0 L5 3 L2 0 Z" />
+        </symbol>
+    </svg>
+
+    <div class="container">
         
         <a href="index.html" class="link-volver">Volver a la Invitación</a>
 
         <h1>Mesa de Regalos</h1>
         <p class="introduccion">
             Nuestra luna de miel será en Brasil. Si deseas, puedes contribuir 
-            regalándonos una de estas increíbles experiencias.
+            regalándonos una de estas increíbles experiencias. Haz clic en una tarjeta para ver más detalles.
         </p>
 
-        <svg style="display: none;">
-            <symbol id="icono-flecha" viewBox="0 0 10 10">
-                <path d="M2.5 0 L10 5 L2.5 10 L0 8 L5 5 L0 2 Z" />
-            </symbol>
-        </svg>
-
         <h2>Río de Janeiro</h2>
-        <div class="lista-actividades">
-
-            <div class="actividad-item">
-                <div class="actividad-header">
-                    <div class="actividad-titulo-wrap">
-                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
-                        <h3 class="actividad-titulo">Visita al Cristo Redentor</h3>
+        <div class="regalos-grid">
+            
+            <div class="regalo-card">
+                <div class="regalo-imagen" style="background-image: url('cristoredentor.jpg');"></div>
+                <div class="regalo-contenido">
+                    <div class="regalo-titulo-wrap">
+                        <h3>Visita al Cristo Redentor</h3>
+                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
                     </div>
+                    <p>Subida en tren y visita al amanecer...</p> 
                     <button class="boton-regalar">Quiero regalar esto</button>
                 </div>
-                <div class="actividad-descripcion">
+                <div class="regalo-descripcion-full">
                     <p>Entradas para subir en el tren de Corcovado y visitar el icónico Cristo Redentor al amanecer, disfrutando de las mejores vistas de la ciudad.</p>
                 </div>
             </div>
 
-            <div class="actividad-item comprado">
-                <div class="actividad-header">
-                    <div class="actividad-titulo-wrap">
-                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
-                        <h3 class="actividad-titulo">Clase de Samba en Lapa</h3>
-                    </div>
-                    <button class="boton-regalar" disabled>¡Regalado!</button>
+            <div class="regalo-card comprado">
+                 <div class="regalo-imagen" style="background-image: url('clasesamba.jpg');"></div>
+                <div class="regalo-contenido">
+                     <div class="regalo-titulo-wrap">
+                        <h3>Clase de Samba en Lapa</h3>
+                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                     </div>
+                    <p>Clase privada de 2 horas en Lapa...</p>
+                    <button class="boton-regalar" disabled>¡Regalado!</button> 
                 </div>
-                <div class="actividad-descripcion">
+                 <div class="regalo-descripcion-full">
                     <p>Una clase privada de 2 horas para aprender los movimientos básicos de la samba y disfrutarlos en el corazón de la vida nocturna de Río.</p>
                 </div>
             </div>
             
-            <div class="actividad-item">
-                <div class="actividad-header">
-                    <div class="actividad-titulo-wrap">
-                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
-                        <h3 class="actividad-titulo">Tour en Bote (Pan de Azúcar)</h3>
-                    </div>
+            <div class="regalo-card">
+                 <div class="regalo-imagen" style="background-image: url('tourbote.jpg');"></div>
+                <div class="regalo-contenido">
+                     <div class="regalo-titulo-wrap">
+                        <h3>Tour en Bote (Pan de Azúcar)</h3>
+                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                     </div>
+                    <p>Paseo en velero al atardecer...</p>
                     <button class="boton-regalar">Quiero regalar esto</button>
                 </div>
-                <div class="actividad-descripcion">
-                    <p>Un paseo en velero por la bahía de Guanabara para ver el atardecer con vistas espectaculares del Pan de Azúcar.</p>
-
+                 <div class="regalo-descripcion-full">
+                     <p>Un paseo en velero por la bahía de Guanabara para ver el atardecer con vistas espectaculares del Pan de Azúcar.</p>
                 </div>
             </div>
 
-            <div class="actividad-item">
-                <div class="actividad-header">
-                    <div class="actividad-titulo-wrap">
-                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
-                        <h3 class="actividad-titulo">Tour Escalera de Selarón y Santa Teresa</h3>
-                    </div>
+            <div class="regalo-card">
+                 <div class="regalo-imagen" style="background-image: url('tourescalera.jpg');"></div>
+                <div class="regalo-contenido">
+                     <div class="regalo-titulo-wrap">
+                        <h3>Tour Escalera Selarón</h3>
+                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                     </div>
+                    <p>Recorrido a pie por Santa Teresa...</p>
                     <button class="boton-regalar">Quiero regalar esto</button>
                 </div>
-                <div class="actividad-descripcion">
+                 <div class="regalo-descripcion-full">
                     <p>Un recorrido a pie por el bohemio barrio de Santa Teresa y sus famosas escaleras de colores creadas por el artista Jorge Selarón.</p>
                 </div>
             </div>
-
-        </div>
-        
-        <h2>São Paulo</h2>
-        <div class="lista-actividades">
             
-            <div class="actividad-item">
-                <div class="actividad-header">
-                    <div class="actividad-titulo-wrap">
-                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
-                        <h3 class="actividad-titulo">Tour Gastronómico (Mercado Municipal)</h3>
-                    </div>
+        </div> <h2>São Paulo</h2>
+        <div class="regalos-grid">
+
+            <div class="regalo-card">
+                 <div class="regalo-imagen" style="background-image: url('tourgastronomico.jpg');"></div>
+                <div class="regalo-contenido">
+                     <div class="regalo-titulo-wrap">
+                        <h3>Tour Gastronómico</h3>
+                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                     </div>
+                    <p>Degustación en el Mercado Municipal...</p>
                     <button class="boton-regalar">Quiero regalar esto</button>
                 </div>
-                <div class="actividad-descripcion">
+                 <div class="regalo-descripcion-full">
                     <p>Un recorrido guiado para probar las famosas frutas exóticas, el sándwich de mortadela y el pastel de bacalhau en el histórico Mercado Municipal.</p>
                 </div>
             </div>
-            
-            <div class="actividad-item comprado">
-                <div class="actividad-header">
-                    <div class="actividad-titulo-wrap">
-                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
-                        <h3 class="actividad-titulo">Noche de Jazz en "Beco das Garrafas"</h3>
-                    </div>
+
+            <div class="regalo-card comprado">
+                 <div class="regalo-imagen" style="background-image: url('jazz.jpg');"></div>
+                <div class="regalo-contenido">
+                     <div class="regalo-titulo-wrap">
+                        <h3>Noche de Jazz</h3>
+                         <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                     </div>
+                    <p>Entradas para Bossa Nova en vivo...</p>
                     <button class="boton-regalar" disabled>¡Regalado!</button>
                 </div>
-                <div class="actividad-descripcion">
+                 <div class="regalo-descripcion-full">
                     <p>Entradas para una noche de Bossa Nova y Jazz en vivo en uno de los clubes más legendarios de la ciudad, cuna de este género musical.</p>
                 </div>
             </div>
 
-            <div class="actividad-item">
-                <div class="actividad-header">
-                    <div class="actividad-titulo-wrap">
-                        <svg class="actividad-flecha"><use href="#icono-flecha" /></svg>
-                        <h3 class="actividad-titulo">Visita al Museo de Arte (MASP)</h3>
+            <div class="regalo-card">
+                 <div class="regalo-imagen" style="background-image: url('masp.jpg');"></div>
+                <div class="regalo-contenido">
+                    <div class="regalo-titulo-wrap">
+                        <h3>Visita al Museo (MASP)</h3>
+                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
                     </div>
+                    <p>Entradas al famoso Museo de Arte...</p>
                     <button class="boton-regalar">Quiero regalar esto</button>
                 </div>
-                <div class="actividad-descripcion">
-                    <p>Entradas al Museo de Arte de São Paulo, famoso por su arquitectura y su increíble colección de arte europeo y brasileño.</p>
+                 <div class="regalo-descripcion-full">
+                     <p>Entradas al Museo de Arte de São Paulo, famoso por su arquitectura y su increíble colección de arte europeo y brasileño.</p>
                 </div>
             </div>
             
-        </div>
-
+        </div> </div> <div id="sticky-footer">
+        <span class="footer-text">
+            Esta invitación es solo una versión de prueba. Si quieres cotizar, contáctanos.
+        </span>
+        <a href="https://wa.me/524274270566?text=Quisiera%20mas%20informacion%20sobre%20las%20invitaciones%20digitales" target="_blank" class="whatsapp-button">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 .9c48.4 0 95.2 18.8 130.1 53.6l1.6 1.6c34.9 34.9 56.2 81.7 56.1 130.5 0 101.7-84.9 184.6-186.6 184.6-.1 0-.1 0-.2 0h-31.9c-30.2 0-59-7.9-85.7-22.7l-1.9-.9-61.5 16.2 16.5-59.8-1.1-1.9c-16.1-28.8-25.6-61.1-25.6-94.8 0-101.7 83.1-184.6 186.6-184.6zm101.2 158.3c-1.3-1.6-4.8-5.1-6.9-6c-2.1-.9-12.8-6.3-14.8-7.1s-4.4-1.3-6.3 .9c-1.9 2.1-7.1 8.7-8.7 10.4s-3.2 1.9-6 1c-2.8-.9-11.7-4.3-22.3-13.6-8.2-7.3-13.8-16.3-15.4-19s-.4-4.5 .4-5.9c.8-1.3 1.9-3.2 2.9-4.3s1.3-1.9 1.9-3.2c.6-1.3 .3-2.5-.3-3.4s-6.3-15.1-8.7-20.7c-2.3-5.6-4.8-4.8-6.3-4.9s-4.4-.1-6.3-.1c-1.9 0-4.8 .7-7.3 2.9s-8.7 8.5-8.7 20.7c0 12.2 8.9 24 10.2 25.7s17.7 27.5 42.6 37.9c5.6 2.3 10 3.7 13.5 4.8s6.9 1.7 10.1 1.4c3.9-.3 12.8-5.2 14.6-10.1s1.9-9.2 1.3-10.1c-.6-.9-2.2-1.4-4.8-2.5z"/></svg>
+             Contactar
+        </a>
     </div>
 
     <script>
-        const headers = document.querySelectorAll('.actividad-header');
-        const botones = document.querySelectorAll('.boton-regalar');
+        (function() {
+            const cards = document.querySelectorAll('.regalo-card');
+            
+            cards.forEach(card => {
+                const clickableArea = card.querySelector('.regalo-contenido'); 
+                const button = card.querySelector('.boton-regalar');
+                const imageArea = card.querySelector('.regalo-imagen'); 
 
-        headers.forEach(header => {
-            header.addEventListener('click', () => {
-                const item = header.closest('.actividad-item');
-                item.classList.toggle('active');
-                // La línea errónea ha sido eliminada.
-            });
-        });
-        
-        botones.forEach(boton => {
-            boton.addEventListener('click', (event) => {
-                event.stopPropagation();
-                
-                if (boton.disabled) {
-                    return;
+                const toggleActive = () => {
+                    // SIEMPRE permite toggle, incluso si está comprado
+                    card.classList.toggle('active');
+                };
+
+                if (clickableArea) {
+                     clickableArea.addEventListener('click', (event) => {
+                          if (button && button.contains(event.target)) return;
+                          toggleActive();
+                     });
                 }
                 
-                alert('¡Gracias por este increíble regalo! Por favor, avísale a Juan o María para que lo marquen como comprado.');
-            });
-        });
-        
-    </script>
+                 if (imageArea) {
+                     imageArea.addEventListener('click', toggleActive);
+                 }
 
+                if (button) {
+                    button.addEventListener('click', (event) => {
+                        event.stopPropagation(); 
+                        if (button.disabled) return; 
+                        alert('¡Gracias! Por favor, avísale a Juan o María para que lo marquen como comprado.');
+                    });
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
