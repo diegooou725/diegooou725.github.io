@@ -39,6 +39,7 @@
             color: var(--negro-suave); 
             line-height: 1.7; 
             text-align: center; 
+            padding-bottom: 80px; /* Espacio para el footer fijo */
         }
 
         h1, h2, h3, h4 { 
@@ -107,15 +108,13 @@
             font-weight: 400; 
         }
 
-        /* 2. Foto Grande (Parallax) */
+        /* 2. Foto Grande (SIN Parallax) */
         .foto-principal-parallax {
             background-image: url('fotonovios1.jpg'); 
             min-height: 100vh; 
-            background-attachment: fixed; 
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            transform: translateZ(0); 
         }
         
         /* Segunda foto */
@@ -376,7 +375,6 @@
              position: fixed;
              bottom: 30px;
              left: 50%;
-             /* transform: translateX(-50%); <-- Se controla en la animación */
              background-color: var(--dorado);
              color: var(--blanco);
              border: none;
@@ -393,7 +391,6 @@
              opacity: 0;
              pointer-events: none;
              transition: opacity 0.3s ease;
-             /* APLICAMOS ANIMACIÓN */
              animation: float 2s ease-in-out infinite; 
         }
         #scroll-down-button.visible {
@@ -406,6 +403,62 @@
              fill: var(--blanco);
         }
 
+        /* --- FOOTER FIJO ANCHO COMPLETO --- */
+        #sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0; /* Asegura inicio en borde izquierdo */
+            width: 100%; /* Ocupa todo el ancho de la ventana */
+            background-color: rgba(255, 255, 255, 0.95); 
+            padding: 10px 30px; /* Padding horizontal para contenido */
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08); 
+            z-index: 999; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            flex-wrap: wrap; 
+            gap: 10px; 
+            
+            /* Oculto por defecto */
+            opacity: 0;
+            transform: translateY(100%); 
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        #sticky-footer.visible {
+            opacity: 1;
+            transform: translateY(0); 
+            pointer-events: auto;
+        }
+        .footer-text {
+            font-size: 0.8rem; 
+            color: var(--gris-medio);
+            text-align: left; 
+            flex-grow: 1; 
+        }
+        .whatsapp-button {
+            display: inline-flex; 
+            align-items: center;
+            background-color: var(--dorado);
+            color: var(--blanco);
+            padding: 6px 12px; 
+            border-radius: 5px;
+            font-size: 0.8rem; 
+            font-weight: 400; 
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; 
+        }
+        .whatsapp-button svg { 
+             width: 14px;
+             height: 14px;
+             fill: var(--blanco);
+             margin-right: 6px;
+        }
+        .whatsapp-button:hover {
+             background-color: #a88a53; 
+        }
+
 
         /* --- AJUSTES PARA MÓVILES --- */
         @media (max-width: 600px) {
@@ -415,7 +468,7 @@
             h4 { font-size: 1.2rem; }
 
             .encabezado h1 {
-                 font-size: 2.2rem; /* Reducido aún más */
+                 font-size: 2.2rem; 
             }
             
             .foto-principal-parallax {
@@ -440,19 +493,25 @@
                  width: 250px; 
                  height: 350px;
             }
+            
+            /* Ajustes Footer Móvil */
+            #sticky-footer {
+                 justify-content: center; 
+                 padding: 8px 15px; 
+                 text-align: center; 
+            }
+            .footer-text {
+                 width: 100%; 
+                 margin-bottom: 5px;
+                 text-align: center; 
+            }
         }
         
         /* --- DEFINICIÓN DE LA ANIMACIÓN FLOAT --- */
         @keyframes float {
-          0% {
-            transform: translateX(-50%) translateY(0px); 
-          }
-          50% {
-            transform: translateX(-50%) translateY(-5px); 
-          }
-          100% {
-            transform: translateX(-50%) translateY(0px); 
-          }
+          0% { transform: translateX(-50%) translateY(0px); }
+          50% { transform: translateX(-50%) translateY(-5px); }
+          100% { transform: translateX(-50%) translateY(0px); }
         }
 
     </style>
@@ -599,6 +658,16 @@
         <p>¡Te esperamos con mucha ilusión!</p>
     </footer>
 
+    <div id="sticky-footer">
+        <span class="footer-text">
+            Esta invitación es solo una versión de prueba. Si quieres cotizar, contáctanos.
+        </span>
+        <a href="https://wa.me/524274270566?text=Quisiera%20mas%20informacion%20sobre%20las%20invitaciones%20digitales" target="_blank" class="whatsapp-button">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 .9c48.4 0 95.2 18.8 130.1 53.6l1.6 1.6c34.9 34.9 56.2 81.7 56.1 130.5 0 101.7-84.9 184.6-186.6 184.6-.1 0-.1 0-.2 0h-31.9c-30.2 0-59-7.9-85.7-22.7l-1.9-.9-61.5 16.2 16.5-59.8-1.1-1.9c-16.1-28.8-25.6-61.1-25.6-94.8 0-101.7 83.1-184.6 186.6-184.6zm101.2 158.3c-1.3-1.6-4.8-5.1-6.9-6c-2.1-.9-12.8-6.3-14.8-7.1s-4.4-1.3-6.3 .9c-1.9 2.1-7.1 8.7-8.7 10.4s-3.2 1.9-6 1c-2.8-.9-11.7-4.3-22.3-13.6-8.2-7.3-13.8-16.3-15.4-19s-.4-4.5 .4-5.9c.8-1.3 1.9-3.2 2.9-4.3s1.3-1.9 1.9-3.2c.6-1.3 .3-2.5-.3-3.4s-6.3-15.1-8.7-20.7c-2.3-5.6-4.8-4.8-6.3-4.9s-4.4-.1-6.3-.1c-1.9 0-4.8 .7-7.3 2.9s-8.7 8.5-8.7 20.7c0 12.2 8.9 24 10.2 25.7s17.7 27.5 42.6 37.9c5.6 2.3 10 3.7 13.5 4.8s6.9 1.7 10.1 1.4c3.9-.3 12.8-5.2 14.6-10.1s1.9-9.2 1.3-10.1c-.6-.9-2.2-1.4-4.8-2.5z"/></svg>
+             Contactar
+        </a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         // --- SCRIPT PARA EL CONTADOR ---
@@ -656,23 +725,36 @@
             },
         });
         
-        // --- SCRIPT PARA EL BOTÓN DE SCROLL ---
+        // --- SCRIPT PARA BOTÓN SCROLL Y FOOTER FIJO ---
         (function() {
             const scrollButton = document.getElementById('scroll-down-button');
             const targetSection = document.getElementById('intro-section');
+            const stickyFooter = document.getElementById('sticky-footer');
 
             const checkScroll = () => {
-                 // Muestra el botón solo si está EXACTAMENTE arriba (scroll = 0)
-                if (window.scrollY < 10) { 
+                const scrollPosition = window.scrollY;
+                const introTop = targetSection ? targetSection.offsetTop : 0; // Posición de la sección 'intro'
+                const windowHeight = window.innerHeight;
+
+                // Muestra botón scroll solo si está arriba
+                if (scrollPosition < 50) { 
                     scrollButton.classList.add('visible');
                 } else {
                     scrollButton.classList.remove('visible');
                 }
+                
+                // Muestra footer fijo si has bajado más allá de la mitad de la primera foto aprox.
+                if (scrollPosition > windowHeight * 0.5) { 
+                    stickyFooter.classList.add('visible');
+                } else {
+                    stickyFooter.classList.remove('visible');
+                }
             };
 
-            window.addEventListener('scroll', checkScroll, { passive: true }); // passive mejora rendimiento
-            checkScroll(); 
+            window.addEventListener('scroll', checkScroll, { passive: true }); 
+            checkScroll(); // Comprueba al cargar
 
+            // Acción del botón de scroll
             scrollButton.addEventListener('click', function(e) {
                 e.preventDefault(); 
                 if (targetSection) {
