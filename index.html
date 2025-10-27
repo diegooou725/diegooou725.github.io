@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boda de Juan Pérez & María Alvarado</title>
+    <title>Boda de Juan & María</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +26,10 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+        
+        html {
+             scroll-behavior: smooth;
         }
 
         body {
@@ -107,10 +111,11 @@
         .foto-principal-parallax {
             background-image: url('fotonovios1.jpg'); 
             min-height: 100vh; 
-            background-attachment: fixed; /* Efecto parallax */
+            background-attachment: fixed; 
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            transform: translateZ(0); 
         }
         
         /* Segunda foto */
@@ -132,6 +137,7 @@
         .intro {
             padding: 60px 0; 
             text-align: center; 
+            scroll-margin-top: 20px; 
         }
         .intro h2 {
             margin-bottom: 15px;
@@ -365,6 +371,42 @@
             text-align: center;
         }
         
+        /* --- BOTÓN FLOTANTE SCROLL --- */
+        #scroll-down-button {
+             position: fixed;
+             bottom: 30px;
+             left: 50%;
+             /* transform: translateX(-50%); <-- Se controla en la animación */
+             background-color: var(--dorado);
+             color: var(--blanco);
+             border: none;
+             border-radius: 50%; 
+             width: 50px;
+             height: 50px;
+             font-size: 24px; 
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             cursor: pointer;
+             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+             z-index: 1000; 
+             opacity: 0;
+             pointer-events: none;
+             transition: opacity 0.3s ease;
+             /* APLICAMOS ANIMACIÓN */
+             animation: float 2s ease-in-out infinite; 
+        }
+        #scroll-down-button.visible {
+             opacity: 1;
+             pointer-events: auto;
+        }
+        #scroll-down-button svg { 
+             width: 20px;
+             height: 20px;
+             fill: var(--blanco);
+        }
+
+
         /* --- AJUSTES PARA MÓVILES --- */
         @media (max-width: 600px) {
             h1 { font-size: 2.5rem; } 
@@ -373,12 +415,10 @@
             h4 { font-size: 1.2rem; }
 
             .encabezado h1 {
-                 /* TAMAÑO MÁS PEQUEÑO PARA MÓVIL */
-                 font-size: 2.2rem; 
+                 font-size: 2.2rem; /* Reducido aún más */
             }
             
             .foto-principal-parallax {
-                 /* Mantenemos 100vh para intentar pantalla completa */
                  min-height: 100vh; 
             }
 
@@ -401,6 +441,19 @@
                  height: 350px;
             }
         }
+        
+        /* --- DEFINICIÓN DE LA ANIMACIÓN FLOAT --- */
+        @keyframes float {
+          0% {
+            transform: translateX(-50%) translateY(0px); 
+          }
+          50% {
+            transform: translateX(-50%) translateY(-5px); 
+          }
+          100% {
+            transform: translateX(-50%) translateY(0px); 
+          }
+        }
 
     </style>
 </head>
@@ -408,15 +461,19 @@
 
     <header class="encabezado">
         <div class="container">
-            <h1>Juan Pérez <span class="ampersand">&</span> María Alvarado</h1>
+            <h1>Juan <span class="ampersand">&</span> María</h1>
         </div>
     </header>
 
     <div class="foto-principal-parallax"></div>
 
+    <a href="#intro-section" id="scroll-down-button" aria-label="Deslizar hacia abajo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 4h2v12l5.5-5.5 1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5 11 16V4z"/></svg>
+    </a>
+
     <div class="container">
 
-        <section class="intro">
+        <section class="intro" id="intro-section"> 
             <h2>¡Nos casamos!</h2>
             <hr class="separador">
             <p>
@@ -598,6 +655,32 @@
                 clickable: true,
             },
         });
+        
+        // --- SCRIPT PARA EL BOTÓN DE SCROLL ---
+        (function() {
+            const scrollButton = document.getElementById('scroll-down-button');
+            const targetSection = document.getElementById('intro-section');
+
+            const checkScroll = () => {
+                 // Muestra el botón solo si está EXACTAMENTE arriba (scroll = 0)
+                if (window.scrollY < 10) { 
+                    scrollButton.classList.add('visible');
+                } else {
+                    scrollButton.classList.remove('visible');
+                }
+            };
+
+            window.addEventListener('scroll', checkScroll, { passive: true }); // passive mejora rendimiento
+            checkScroll(); 
+
+            scrollButton.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        })();
+
     </script>
 </body>
 </html>
