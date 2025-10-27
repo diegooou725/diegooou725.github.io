@@ -39,7 +39,7 @@
             color: var(--negro-suave); 
             line-height: 1.7; 
             text-align: center; 
-            padding-bottom: 80px; /* Espacio para el footer fijo */
+            padding-bottom: 80px; 
         }
 
         h1, h2, h3, h4 { 
@@ -78,6 +78,7 @@
         p {
             color: var(--gris-medio); 
             font-weight: 300; 
+            margin-bottom: 20px; 
         }
         
         strong {
@@ -361,6 +362,78 @@
         .swiper-pagination-bullet-active {
             background-color: var(--dorado) !important;
         }
+        
+        /* --- ESTILOS FORMULARIO RSVP --- */
+        .rsvp-section {
+             padding: 60px 0;
+             background-color: var(--blanco); /* Fondo blanco para esta sección */
+        }
+        .rsvp-section h2 {
+             margin-bottom: 10px; 
+        }
+        .subtitulo-rsvp { 
+             font-size: 0.9rem;
+             font-style: italic;
+             color: var(--gris-medio);
+             margin-bottom: 30px;
+        }
+        .rsvp-form {
+            max-width: 500px; 
+            margin: 0 auto; 
+            text-align: left; 
+        }
+        .form-group {
+             margin-bottom: 20px; 
+        }
+        .rsvp-form label {
+            display: block;
+            font-weight: 400; 
+            margin-bottom: 5px;
+            color: var(--negro-suave);
+        }
+        .rsvp-form input[type="text"],
+        .rsvp-form input[type="email"], /* Mantenemos estilo por si acaso */
+        .rsvp-form select,
+        .rsvp-form textarea { /* Añadido textarea */
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gris-borde);
+            border-radius: 6px;
+            box-sizing: border-box; 
+            font-family: 'Raleway', sans-serif;
+            font-weight: 300; 
+            font-size: 1rem;
+            color: var(--negro-suave);
+        }
+        .rsvp-form input::placeholder,
+        .rsvp-form textarea::placeholder,
+        .rsvp-form select {
+             color: var(--gris-medio); 
+        }
+        .rsvp-form textarea {
+             min-height: 80px; /* Alto mínimo para mensaje */
+             resize: vertical; /* Permite redimensionar verticalmente */
+        }
+        /* Estilo botón envío */
+        .boton-enviar {
+            display: inline-block;
+            background-color: var(--dorado);
+            color: var(--blanco);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 400; 
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 100%; 
+            margin-top: 10px; 
+        }
+        .boton-enviar:hover {
+            background-color: #a88a53;
+        }
+
 
         /* Footer Simple */
         footer {
@@ -403,14 +476,14 @@
              fill: var(--blanco);
         }
 
-        /* --- FOOTER FIJO ANCHO COMPLETO --- */
+        /* --- FOOTER FIJO --- */
         #sticky-footer {
             position: fixed;
             bottom: 0;
-            left: 0; /* Asegura inicio en borde izquierdo */
-            width: 100%; /* Ocupa todo el ancho de la ventana */
+            left: 0; 
+            width: 100%; 
             background-color: rgba(255, 255, 255, 0.95); 
-            padding: 10px 30px; /* Padding horizontal para contenido */
+            padding: 10px 30px; 
             box-shadow: 0 -2px 10px rgba(0,0,0,0.08); 
             z-index: 999; 
             display: flex;
@@ -418,8 +491,6 @@
             align-items: center;
             flex-wrap: wrap; 
             gap: 10px; 
-            
-            /* Oculto por defecto */
             opacity: 0;
             transform: translateY(100%); 
             pointer-events: none;
@@ -654,6 +725,48 @@
         </div>
     </section>
 
+     <section class="rsvp-section">
+         <div class="container">
+             <h2>Confirmación de Asistencia</h2>
+             <p class="subtitulo-rsvp">Evento exclusivo para adultos.</p> 
+             <hr class="separador" style="margin-top:0; margin-bottom: 30px;">
+
+             <form id="rsvp-form" 
+                   action="mailto:diego.725.reyes@gmail.com?subject=Confirmación Boda Juan & María" 
+                   method="GET" 
+                   enctype="text/plain" 
+                   class="rsvp-form">
+                 
+                 <div class="form-group">
+                     <label for="name">Nombre completo:</label>
+                     <input type="text" id="name" name="Nombre" required>
+                 </div>
+
+                 <div class="form-group">
+                     <label for="guests">Número de invitados (incluyéndote):</label>
+                     <select id="guests" name="Invitados" required>
+                         <option value="" disabled selected>-- Selecciona cuántos asisten --</option>
+                         <option value="1">1 invitado</option>
+                         <option value="2">2 invitados</option>
+                         <option value="3">3 invitados</option>
+                         <option value="4">4 invitados</option>
+                         <option value="5">5 invitados</option>
+                         <option value="6">6 invitados</option>
+                         <option value="0 (No asistiremos)">No podremos asistir</option> 
+                     </select>
+                 </div>
+
+                 <div class="form-group">
+                     <label for="message">¿Quieres enviar un mensaje? (opcional):</label>
+                     <textarea id="message" name="Mensaje" rows="3" placeholder="Escribe aquí tu mensaje..."></textarea>
+                 </div>
+                 
+                 <button type="submit" class="boton-enviar">
+                     Enviar Confirmación por Email
+                 </button>
+             </form>
+         </div>
+     </section>
     <footer>
         <p>¡Te esperamos con mucha ilusión!</p>
     </footer>
@@ -731,9 +844,13 @@
             const targetSection = document.getElementById('intro-section');
             const stickyFooter = document.getElementById('sticky-footer');
 
+            let introTop = 0;
+            if (targetSection) {
+                 introTop = targetSection.offsetTop; 
+            }
+
             const checkScroll = () => {
                 const scrollPosition = window.scrollY;
-                const introTop = targetSection ? targetSection.offsetTop : 0; // Posición de la sección 'intro'
                 const windowHeight = window.innerHeight;
 
                 // Muestra botón scroll solo si está arriba
