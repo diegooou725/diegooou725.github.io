@@ -106,14 +106,11 @@
         /* 2. Foto Grande (Parallax) */
         .foto-principal-parallax {
             background-image: url('fotonovios1.jpg'); 
-            min-height: 100vh; /* Altura pantalla completa */
-            /* PARALLAX RESTAURADO */
-            background-attachment: fixed; 
+            min-height: 100vh; 
+            background-attachment: fixed; /* Efecto parallax */
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            /* Importante para que 'fixed' funcione bien en algunos móviles */
-            transform: translateZ(0); 
         }
         
         /* Segunda foto */
@@ -376,13 +373,12 @@
             h4 { font-size: 1.2rem; }
 
             .encabezado h1 {
-                 /* TAMAÑO AJUSTADO PARA MÓVIL */
-                 font-size: 2.4rem; 
+                 /* TAMAÑO MÁS PEQUEÑO PARA MÓVIL */
+                 font-size: 2.2rem; 
             }
             
             .foto-principal-parallax {
                  /* Mantenemos 100vh para intentar pantalla completa */
-                 /* background-attachment: scroll; /* Comentado - Revertimos a fixed */
                  min-height: 100vh; 
             }
 
