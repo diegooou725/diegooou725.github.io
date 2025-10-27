@@ -84,18 +84,19 @@
 
         /* 1. Encabezado */
         .encabezado {
-            padding: 25px 0;
+            padding: 20px 0; /* Reducido padding vertical */
             background-color: var(--blanco);
             border-bottom: 1px solid var(--gris-borde);
         }
         .encabezado h1 {
             font-family: 'Great Vibes', cursive;
             font-weight: 400; 
-            font-size: 3.5rem; 
+            font-size: 3rem; /* Tamaño base */
             letter-spacing: 0px; 
             color: var(--negro-suave);
             margin-bottom: 0; 
             font-style: normal; 
+            line-height: 1.2; /* Asegura buen espaciado si se parte */
         }
         .ampersand {
             color: var(--dorado);
@@ -104,9 +105,9 @@
 
         /* 2. Foto Grande (Parallax) */
         .foto-principal-parallax {
-            /* NOMBRE DE FOTO ACTUALIZADO */
             background-image: url('fotonovios1.jpg'); 
-            min-height: 70vh; 
+            /* ALTURA AJUSTADA: 100vh para intentar pantalla completa */
+            min-height: 100vh; 
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
@@ -363,6 +364,43 @@
             font-size: 1.2rem;
             color: var(--gris-medio); 
             text-align: center;
+        }
+        
+        /* --- AJUSTES PARA MÓVILES --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; } /* Más pequeño en móvil */
+            h2 { font-size: 2.2rem; }
+            h3 { font-size: 1.6rem; }
+            h4 { font-size: 1.2rem; }
+
+            .encabezado h1 {
+                 font-size: 2.5rem; /* Reducido para móviles */
+            }
+            
+            .foto-principal-parallax {
+                 /* Mantenemos 100vh, pero quitamos 'fixed' que puede dar problemas */
+                 background-attachment: scroll; 
+                 min-height: 80vh; /* Ajuste alternativo si 100vh es problemático */
+            }
+
+            .container {
+                padding: 0 10px; /* Menos padding lateral */
+            }
+            
+            .intro p { font-size: 1rem; }
+            .fecha-texto { font-size: 1.5rem; }
+            .tiempo-caja span:first-child { font-size: 2.2rem; }
+            .tiempo-caja span:last-child { font-size: 0.7rem; }
+            
+            .vestimenta-grid {
+                 grid-template-columns: 1fr; /* Una columna en móvil */
+                 gap: 30px; /* Más espacio vertical */
+            }
+            
+            .swiper-slide {
+                 width: 250px; /* Slides más pequeñas */
+                 height: 350px;
+            }
         }
 
     </style>
