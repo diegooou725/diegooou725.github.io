@@ -16,7 +16,7 @@
             --dorado: #B99962; 
             --negro-suave: #333333; 
             --gris-medio: #555555; 
-            --fondo-seccion: #F8F8F8; 
+            --fondo-seccion: #F8F8F8; /* Gris claro para secciones alternas */
             --gris-borde: #eee; 
             --gris-claro-comprado: #aaa; 
             --dorado-velo: rgba(185, 153, 98, 0.4); 
@@ -31,11 +31,10 @@
         body {
             font-family: 'Raleway', sans-serif;
             font-weight: 300; 
-            background-color: var(--fondo-seccion); 
+            background-color: var(--blanco); /* Fondo principal blanco */
             color: var(--negro-suave); 
             line-height: 1.7; 
             text-align: center; 
-            padding: 20px; 
             padding-bottom: 90px; 
         }
 
@@ -49,20 +48,23 @@
         }
         
         /* Ajuste de tamaño */
-        h1 { font-size: 2.8rem; margin-top: 40px; } 
+        h1 { font-size: 2.8rem; margin-top: 60px; } /* Añadido margen superior */
         h2 { font-size: 2rem; text-align: left; border-bottom: 1px solid var(--gris-borde); padding-bottom: 10px; margin-top: 40px;} 
         h3 { font-size: 1.3rem; font-weight: 400; color: var(--negro-suave); margin: 10px 0;} 
 
-        /* Contenedor principal (Tarjeta) */
+        /* Contenedor INTERNO para controlar ancho */
         .container {
             max-width: 900px; 
-            margin: 40px auto;
-            padding: 40px 30px 50px 30px;
-            background-color: var(--blanco); 
-            border-radius: 12px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
-            position: relative; 
-            text-align: center; 
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Estilo para las secciones */
+        .seccion {
+             padding: 60px 0; /* Espaciado vertical */
+        }
+        .seccion-gris {
+             background-color: var(--fondo-seccion); /* Fondo gris para alternar */
         }
         
         /* Párrafos */
@@ -78,17 +80,16 @@
             text-align: center; 
         }
         
-        /* Link Volver */
+        /* Link Volver (Ahora en la primera sección) */
         .link-volver {
-            display: inline-block;
-            position: absolute;
-            top: 25px;
-            left: 30px;
+            display: block; /* Ocupa su línea */
+            text-align: left; /* Alineado a la izquierda */
             font-size: 1rem;
             color: var(--dorado); 
             text-decoration: none;
             font-weight: 400; 
             transition: color 0.3s ease;
+            margin-bottom: 30px; /* Espacio debajo */
         }
         .link-volver:hover { color: var(--negro-suave); }
         .link-volver::before { 
@@ -285,10 +286,11 @@
 
         /* --- AJUSTES PARA MÓVILES --- */
         @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
+            h1 { font-size: 2.2rem; margin-top: 50px; /* Más espacio por link volver */}
             h2 { font-size: 1.8rem; }
-            .link-volver { position: static; margin-bottom: 20px; display: block;}
-            .container { padding: 20px 15px 30px 15px; margin: 20px auto;}
+            .link-volver { position: static; margin-bottom: 20px; display: block; text-align: left;}
+            .container { padding: 0 15px; /* Quitamos padding vertical extra */}
+            .seccion { padding: 40px 0; } /* Menos padding vertical */
             
             /* Ajustes Footer Móvil */
             #sticky-footer {
@@ -313,128 +315,141 @@
         </symbol>
     </svg>
 
-    <div class="container">
-        
-        <a href="index.html" class="link-volver">Volver a la Invitación</a>
+    <section class="seccion seccion-gris">
+        <div class="container">
+             <a href="index.html" class="link-volver">Volver a la Invitación</a>
 
-        <h1>Mesa de Regalos</h1>
-        <p class="introduccion">
-            Nuestra luna de miel será en Brasil. Si deseas, puedes contribuir 
-            regalándonos una de estas increíbles experiencias. Haz clic en una tarjeta para ver más detalles.
-        </p>
-
-        <h2>Río de Janeiro</h2>
-        <div class="regalos-grid">
-            
-            <div class="regalo-card">
-                <div class="regalo-imagen" style="background-image: url('cristoredentor.jpg');"></div>
-                <div class="regalo-contenido">
-                    <div class="regalo-titulo-wrap">
-                        <h3>Visita al Cristo Redentor</h3>
-                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+             <h1>Mesa de Regalos</h1>
+             <p class="introduccion">
+                 Nuestra luna de miel será en Brasil. Si deseas, puedes contribuir 
+                 regalándonos una de estas increíbles experiencias. Haz clic en una tarjeta para ver más detalles.
+             </p>
+        </div>
+    </section>
+    
+    <section class="seccion">
+         <div class="container">
+            <h2>Río de Janeiro</h2>
+            <div class="regalos-grid">
+                
+                <div class="regalo-card">
+                    <div class="regalo-imagen" style="background-image: url('cristoredentor.jpg');"></div>
+                    <div class="regalo-contenido">
+                        <div class="regalo-titulo-wrap">
+                            <h3>Visita al Cristo Redentor</h3>
+                            <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                        </div>
+                        <p>Subida en tren y visita al amanecer...</p> 
+                        <button class="boton-regalar">Quiero regalar esto</button>
                     </div>
-                    <p>Subida en tren y visita al amanecer...</p> 
-                    <button class="boton-regalar">Quiero regalar esto</button>
-                </div>
-                <div class="regalo-descripcion-full">
-                    <p>Entradas para subir en el tren de Corcovado y visitar el icónico Cristo Redentor al amanecer, disfrutando de las mejores vistas de la ciudad.</p>
-                </div>
-            </div>
-
-            <div class="regalo-card comprado">
-                 <div class="regalo-imagen" style="background-image: url('clasesamba.jpg');"></div>
-                <div class="regalo-contenido">
-                     <div class="regalo-titulo-wrap">
-                        <h3>Clase de Samba en Lapa</h3>
-                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
-                     </div>
-                    <p>Clase privada de 2 horas en Lapa...</p>
-                    <button class="boton-regalar" disabled>¡Regalado!</button> 
-                </div>
-                 <div class="regalo-descripcion-full">
-                    <p>Una clase privada de 2 horas para aprender los movimientos básicos de la samba y disfrutarlos en el corazón de la vida nocturna de Río.</p>
-                </div>
-            </div>
-            
-            <div class="regalo-card">
-                 <div class="regalo-imagen" style="background-image: url('tourbote.jpg');"></div>
-                <div class="regalo-contenido">
-                     <div class="regalo-titulo-wrap">
-                        <h3>Tour en Bote (Pan de Azúcar)</h3>
-                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
-                     </div>
-                    <p>Paseo en velero al atardecer...</p>
-                    <button class="boton-regalar">Quiero regalar esto</button>
-                </div>
-                 <div class="regalo-descripcion-full">
-                     <p>Un paseo en velero por la bahía de Guanabara para ver el atardecer con vistas espectaculares del Pan de Azúcar.</p>
-                </div>
-            </div>
-
-            <div class="regalo-card">
-                 <div class="regalo-imagen" style="background-image: url('tourescalera.jpg');"></div>
-                <div class="regalo-contenido">
-                     <div class="regalo-titulo-wrap">
-                        <h3>Tour Escalera Selarón</h3>
-                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
-                     </div>
-                    <p>Recorrido a pie por Santa Teresa...</p>
-                    <button class="boton-regalar">Quiero regalar esto</button>
-                </div>
-                 <div class="regalo-descripcion-full">
-                    <p>Un recorrido a pie por el bohemio barrio de Santa Teresa y sus famosas escaleras de colores creadas por el artista Jorge Selarón.</p>
-                </div>
-            </div>
-            
-        </div> <h2>São Paulo</h2>
-        <div class="regalos-grid">
-
-            <div class="regalo-card">
-                 <div class="regalo-imagen" style="background-image: url('tourgastronomico.jpg');"></div>
-                <div class="regalo-contenido">
-                     <div class="regalo-titulo-wrap">
-                        <h3>Tour Gastronómico</h3>
-                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
-                     </div>
-                    <p>Degustación en el Mercado Municipal...</p>
-                    <button class="boton-regalar">Quiero regalar esto</button>
-                </div>
-                 <div class="regalo-descripcion-full">
-                    <p>Un recorrido guiado para probar las famosas frutas exóticas, el sándwich de mortadela y el pastel de bacalhau en el histórico Mercado Municipal.</p>
-                </div>
-            </div>
-
-            <div class="regalo-card comprado">
-                 <div class="regalo-imagen" style="background-image: url('jazz.jpg');"></div>
-                <div class="regalo-contenido">
-                     <div class="regalo-titulo-wrap">
-                        <h3>Noche de Jazz</h3>
-                         <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
-                     </div>
-                    <p>Entradas para Bossa Nova en vivo...</p>
-                    <button class="boton-regalar" disabled>¡Regalado!</button>
-                </div>
-                 <div class="regalo-descripcion-full">
-                    <p>Entradas para una noche de Bossa Nova y Jazz en vivo en uno de los clubes más legendarios de la ciudad, cuna de este género musical.</p>
-                </div>
-            </div>
-
-            <div class="regalo-card">
-                 <div class="regalo-imagen" style="background-image: url('masp.jpg');"></div>
-                <div class="regalo-contenido">
-                    <div class="regalo-titulo-wrap">
-                        <h3>Visita al Museo (MASP)</h3>
-                        <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                    <div class="regalo-descripcion-full">
+                        <p>Entradas para subir en el tren de Corcovado y visitar el icónico Cristo Redentor al amanecer, disfrutando de las mejores vistas de la ciudad.</p>
                     </div>
-                    <p>Entradas al famoso Museo de Arte...</p>
-                    <button class="boton-regalar">Quiero regalar esto</button>
                 </div>
-                 <div class="regalo-descripcion-full">
-                     <p>Entradas al Museo de Arte de São Paulo, famoso por su arquitectura y su increíble colección de arte europeo y brasileño.</p>
+
+                <div class="regalo-card comprado">
+                    <div class="regalo-imagen" style="background-image: url('clasesamba.jpg');"></div>
+                    <div class="regalo-contenido">
+                         <div class="regalo-titulo-wrap">
+                            <h3>Clase de Samba en Lapa</h3>
+                            <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                         </div>
+                        <p>Clase privada de 2 horas en Lapa...</p>
+                        <button class="boton-regalar" disabled>¡Regalado!</button> 
+                    </div>
+                     <div class="regalo-descripcion-full">
+                        <p>Una clase privada de 2 horas para aprender los movimientos básicos de la samba y disfrutarlos en el corazón de la vida nocturna de Río.</p>
+                    </div>
                 </div>
-            </div>
-            
-        </div> </div> <div id="sticky-footer">
+                
+                <div class="regalo-card">
+                     <div class="regalo-imagen" style="background-image: url('tourbote.jpg');"></div>
+                    <div class="regalo-contenido">
+                         <div class="regalo-titulo-wrap">
+                            <h3>Tour en Bote (Pan de Azúcar)</h3>
+                            <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                         </div>
+                        <p>Paseo en velero al atardecer...</p>
+                        <button class="boton-regalar">Quiero regalar esto</button>
+                    </div>
+                     <div class="regalo-descripcion-full">
+                         <p>Un paseo en velero por la bahía de Guanabara para ver el atardecer con vistas espectaculares del Pan de Azúcar.</p>
+                    </div>
+                </div>
+
+                <div class="regalo-card">
+                     <div class="regalo-imagen" style="background-image: url('tourescalera.jpg');"></div>
+                    <div class="regalo-contenido">
+                         <div class="regalo-titulo-wrap">
+                            <h3>Tour Escalera Selarón</h3>
+                            <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                         </div>
+                        <p>Recorrido a pie por Santa Teresa...</p>
+                        <button class="boton-regalar">Quiero regalar esto</button>
+                    </div>
+                     <div class="regalo-descripcion-full">
+                        <p>Un recorrido a pie por el bohemio barrio de Santa Teresa y sus famosas escaleras de colores creadas por el artista Jorge Selarón.</p>
+                    </div>
+                </div>
+                
+            </div> </div>
+    </section>
+
+    <section class="seccion seccion-gris">
+          <div class="container">
+             <h2>São Paulo</h2>
+             <div class="regalos-grid">
+
+                 <div class="regalo-card">
+                      <div class="regalo-imagen" style="background-image: url('tourgastronomico.jpg');"></div>
+                     <div class="regalo-contenido">
+                          <div class="regalo-titulo-wrap">
+                             <h3>Tour Gastronómico</h3>
+                             <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                          </div>
+                         <p>Degustación en el Mercado Municipal...</p>
+                         <button class="boton-regalar">Quiero regalar esto</button>
+                     </div>
+                      <div class="regalo-descripcion-full">
+                         <p>Un recorrido guiado para probar las famosas frutas exóticas, el sándwich de mortadela y el pastel de bacalhau en el histórico Mercado Municipal.</p>
+                     </div>
+                 </div>
+
+                 <div class="regalo-card comprado">
+                      <div class="regalo-imagen" style="background-image: url('jazz.jpg');"></div>
+                     <div class="regalo-contenido">
+                          <div class="regalo-titulo-wrap">
+                             <h3>Noche de Jazz</h3>
+                              <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                          </div>
+                         <p>Entradas para Bossa Nova en vivo...</p>
+                         <button class="boton-regalar" disabled>¡Regalado!</button>
+                     </div>
+                      <div class="regalo-descripcion-full">
+                         <p>Entradas para una noche de Bossa Nova y Jazz en vivo en uno de los clubes más legendarios de la ciudad, cuna de este género musical.</p>
+                     </div>
+                 </div>
+
+                 <div class="regalo-card">
+                      <div class="regalo-imagen" style="background-image: url('masp.jpg');"></div>
+                     <div class="regalo-contenido">
+                         <div class="regalo-titulo-wrap">
+                             <h3>Visita al Museo (MASP)</h3>
+                             <svg class="detalle-flecha"><use href="#icono-flecha-abajo" /></svg>
+                         </div>
+                         <p>Entradas al famoso Museo de Arte...</p>
+                         <button class="boton-regalar">Quiero regalar esto</button>
+                     </div>
+                      <div class="regalo-descripcion-full">
+                          <p>Entradas al Museo de Arte de São Paulo, famoso por su arquitectura y su increíble colección de arte europeo y brasileño.</p>
+                     </div>
+                 </div>
+                 
+             </div> </div>
+     </section>
+
+
+    <div id="sticky-footer">
         <span class="footer-text">
             Esta invitación es solo una versión de prueba. Si quieres cotizar, contáctanos.
         </span>
@@ -449,29 +464,25 @@
             const cards = document.querySelectorAll('.regalo-card');
             
             cards.forEach(card => {
-                const clickableArea = card.querySelector('.regalo-contenido'); 
+                const clickableArea = card; // Hacemos clickeable toda la tarjeta
                 const button = card.querySelector('.boton-regalar');
-                const imageArea = card.querySelector('.regalo-imagen'); 
 
-                const toggleActive = () => {
-                    // SIEMPRE permite toggle, incluso si está comprado
+                const toggleActive = (event) => {
+                     // Si el click fue DIRECTAMENTE en el botón, no hacemos nada aquí
+                     if (button && event.target === button) {
+                          return;
+                     }
+                     // Si no, activa/desactiva
                     card.classList.toggle('active');
                 };
 
-                if (clickableArea) {
-                     clickableArea.addEventListener('click', (event) => {
-                          if (button && button.contains(event.target)) return;
-                          toggleActive();
-                     });
-                }
+                // Click en cualquier parte de la tarjeta (excepto el botón)
+                clickableArea.addEventListener('click', toggleActive);
                 
-                 if (imageArea) {
-                     imageArea.addEventListener('click', toggleActive);
-                 }
-
+                // Click en botón (detiene la propagación)
                 if (button) {
                     button.addEventListener('click', (event) => {
-                        event.stopPropagation(); 
+                        event.stopPropagation(); // MUY IMPORTANTE: evita que el click active el toggle de la tarjeta
                         if (button.disabled) return; 
                         alert('¡Gracias! Por favor, avísale a Juan o María para que lo marquen como comprado.');
                     });
